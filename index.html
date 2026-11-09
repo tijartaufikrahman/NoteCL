@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Catatan Kiriman Lamaran</title>
+  
+  <!-- Favicon -->
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%231A396D'%3E%3Cpath d='M20 6h-4V4c0-1.11-.89-2-2-2h-4c-1.11 0-2 .89-2 2v2H4c-1.11 0-1.99.89-1.99 2L2 19c0 1.11.89 2 2 2h16c1.11 0 2-.89 2-2V8c0-1.11-.89-2-2-2zm-6 0h-4V4h4v2z'/%3E%3C/svg%3E">
+
+  <!-- Google Fonts: Plus Jakarta Sans -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <!-- Bootstrap 5.3.3 CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
+  <!-- FontAwesome 6.5.1 -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+  <style>
+    :root {
+      --primary-color: #1A396D;
+      --primary-hover: #142C54;
+      --primary-active: #0F2242;
+      --primary-light: #eef3fb;
+      --primary-border: #d4e0f4;
+      --slate-50: #f8fafc;
+      --slate-100: #f1f5f9;
+      --slate-200: #e2e8f0;
+      --slate-300: #cbd5e1;
+      --slate-400: #94a3b8;
+      --slate-500: #64748b;
+      --slate-600: #475569;
+      --slate-700: #334155;
+      --slate-800: #1e293b;
+      --slate-900: #0f172a;
+    }
+
+    ::selection {
+      background-color: var(--primary-color);
+      color: #ffffff;
+    }
+
+    html, body {
+      height: 100%;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+      background: linear-gradient(135deg, var(--slate-100) 0%, var(--slate-50) 45%, #ffffff 100%);
+      color: var(--slate-800);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    /* 1 Layar Penuh Tanpa Scroll di Desktop / Laptop */
+    @media (min-width: 992px) {
+      body {
+        height: 100vh;
+        overflow: hidden;
+      }
+    }
+
+    /* Ambient background gradient */
+    .bg-ambient {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 0;
+      background: 
+        radial-gradient(circle at 10% 20%, rgba(26, 57, 109, 0.05) 0%, transparent 45%),
+        radial-gradient(circle at 90% 70%, rgba(26, 57, 109, 0.04) 0%, transparent 50%);
+    }
+
+    .main-viewport {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      height: 100%;
+      min-height: 100vh;
+    }
+
+    @media (min-width: 992px) {
+      .main-viewport {
+        min-height: 100vh;
+        height: 100vh;
+      }
+    }
+
+    /* Container Max Width sesuai dengan max-w-6xl */
+    .container-custom {
+      max-width: 1140px;
+      width: 100%;
+      margin-left: auto;
+      margin-right: auto;
+      padding-left: 1.5rem;
+      padding-right: 1.5rem;
+    }
+
+    /* Hero Typography persis gaya website contoh */
+    .hero-title {
+      font-size: clamp(2.2rem, 4.2vw, 3.4rem);
+      font-weight: 800;
+      line-height: 1.15;
+      color: var(--slate-900);
+      letter-spacing: -0.025em;
+    }
+
+    .hero-desc {
+      font-size: 1.05rem;
+      line-height: 1.75;
+      color: var(--slate-600);
+      max-width: 580px;
+    }
+
+    /* Right Action Card (Pengganti Kotak Login, diatur terpusat vertikal) */
+    .action-card {
+      background: #ffffff;
+      border: 1px solid var(--slate-200);
+      border-radius: 1.5rem;
+      box-shadow: 0 10px 30px -5px rgba(15, 23, 42, 0.06), 0 4px 12px -2px rgba(15, 23, 42, 0.03);
+      padding: 2.75rem 2.25rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      min-height: 390px;
+      position: relative;
+    }
+
+    /* Ikon Lingkaran Header Kartu */
+    .card-icon-circle {
+      width: 56px;
+      height: 56px;
+      margin: 0 auto 1.25rem;
+      border-radius: 16px;
+      background: linear-gradient(135deg, var(--primary-color) 0%, #29559e 100%);
+      color: #ffffff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.35rem;
+      box-shadow: 0 8px 18px rgba(26, 57, 109, 0.25);
+    }
+
+    /* Kata-Kata Pengantar di dalam Kartu */
+    .card-quote-text {
+      font-size: 0.88rem;
+      line-height: 1.65;
+      color: var(--slate-600);
+      max-width: 380px;
+      margin: 0 auto 1.75rem;
+    }
+
+    /* TOMBOL BESAR DI TENGAH VERTIKAL */
+    .btn-big-action {
+      background: linear-gradient(135deg, var(--primary-color) 0%, #224a8c 100%);
+      color: #ffffff !important;
+      text-decoration: none;
+      font-weight: 700;
+      font-size: 1.15rem;
+      padding: 1.15rem 2rem;
+      border-radius: 1rem;
+      border: none;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.85rem;
+      width: 100%;
+      max-width: 360px;
+      box-shadow: 0 10px 25px rgba(26, 57, 109, 0.35);
+      transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+      cursor: pointer;
+    }
+
+    .btn-big-action:hover {
+      background: linear-gradient(135deg, var(--primary-hover) 0%, #19386b 100%);
+      transform: translateY(-2px);
+      box-shadow: 0 14px 32px rgba(26, 57, 109, 0.45);
+    }
+
+    .btn-big-action:active {
+      transform: translateY(0);
+      box-shadow: 0 6px 16px rgba(26, 57, 109, 0.25);
+    }
+
+    .btn-big-action .action-arrow {
+      transition: transform 0.2s ease;
+      font-size: 1.05rem;
+    }
+
+    .btn-big-action:hover .action-arrow {
+      transform: translateX(5px);
+    }
+
+    /* Mobile Responsive Optimizations */
+    @media (max-width: 768px) {
+      .main-viewport {
+        min-height: 100vh;
+        height: auto;
+      }
+      .action-card {
+        padding: 1.75rem 1.25rem;
+        min-height: auto;
+      }
+      .hero-title {
+        font-size: 1.85rem;
+      }
+      .hero-desc {
+        font-size: 0.95rem;
+      }
+      .btn-big-action {
+        font-size: 1.05rem;
+        padding: 1rem 1.5rem;
+      }
+    }
+
+    /* Footer persis website contoh */
+    footer {
+      border-top: 1px solid rgba(226, 232, 240, 0.75);
+      background: transparent;
+      padding: 1.25rem 0;
+      font-size: 0.75rem;
+      color: var(--slate-500);
+    }
+
+    .footer-link {
+      color: var(--slate-500);
+      text-decoration: none;
+      transition: color 0.15s ease;
+    }
+
+    .footer-link:hover {
+      color: var(--primary-color);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Ambient Light Background -->
+  <div class="bg-ambient"></div>
+
+  <!-- Main Viewport (1 Layar Penuh Tanpa Scroll) -->
+  <div class="main-viewport">
+    
+    <!-- Top Space Placeholder (Agar simetris persis seperti web contoh) -->
+    <div class="pt-3"></div>
+
+    <!-- Main Content (Vertically Centered) -->
+    <main class="flex-grow-1 d-flex flex-column justify-content-center">
+      <div class="container-custom">
+        <div class="row align-items-center g-4 g-lg-5">
+          
+          <!-- Sisi Kiri: Judul Besar & Penjelasan Sistem -->
+          <div class="col-lg-7 pe-lg-5">
+            <h1 class="hero-title mb-4">
+              Catatan Kiriman Lamaran Kerja
+            </h1>
+            <p class="hero-desc mb-0">
+              Aplikasi terpusat untuk mendokumentasikan seluruh berkas lamaran pekerjaan yang telah dikirim, memantau perkembangan tahapan seleksi secara real-time, mengorganisir jadwal tes & wawancara, serta mengevaluasi riwayat rekrutmen perusahaan secara terstruktur dan efisien.
+            </p>
+          </div>
+
+          <!-- Sisi Kanan: Kotak Putih dengan Tombol Besar di Tengah Vertikal -->
+          <div class="col-lg-5">
+            <div class="action-card">
+              
+              <!-- Ikon -->
+              <div class="card-icon-circle">
+                <i class="fa-solid fa-folder-open"></i>
+              </div>
+
+              <!-- Header & Kata-Kata -->
+              <h2 class="h5 fw-bold text-slate-900 mb-2" style="font-size: 1.35rem; letter-spacing: -0.01em;">
+                Portal Catatan Lamaran
+              </h2>
+              
+              <!-- Kata-kata Pengantar Pengganti Login -->
+              <p class="card-quote-text">
+                Halaman ini disiapkan khusus untuk membuat dan mengelola catatan kiriman lamaran kerja Anda secara rapi dan praktis tanpa perlu login.
+              </p>
+
+              <!-- TOMBOL BESAR DI TENGAH VERTIKAL -->
+              <div class="w-100 d-flex justify-content-center mb-3">
+                <a href="catatan.html" class="btn-big-action" id="btnLanjut">
+                  <i class="fa-solid fa-file-lines fa-lg"></i>
+                  <span>Lanjut Ke Catatan</span>
+                  <i class="fa-solid fa-arrow-right action-arrow"></i>
+                </a>
+              </div>
+
+              <!-- Keterangan Sub Bawah Tombol -->
+              <div class="text-slate-400 d-flex align-items-center justify-content-center gap-2" style="font-size: 0.74rem;">
+                <i class="fa-solid fa-circle-check text-success"></i>
+                <span>Akses Langsung &bull; Tanpa Perlu Login</span>
+              </div>
+
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </main>
+
+    <!-- Footer Persis Website Contoh -->
+    <footer>
+      <div class="container-custom d-flex flex-column flex-sm-row align-items-center justify-content-between gap-2">
+        <div>
+          &copy; <span id="currentYear">2026</span> Seluruh hak cipta dilindungi.
+        </div>
+        <div class="d-flex align-items-center gap-3 text-slate-400">
+          <a href="#" class="footer-link" id="linkPanduan">
+            Panduan Pengguna
+          </a>
+          <span>&bull;</span>
+          <a href="#" class="footer-link" id="linkBantuan">
+            Bantuan Layanan
+          </a>
+        </div>
+      </div>
+    </footer>
+
+  </div>
+
+  <!-- jQuery 3.7.1 -->
+  <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+  <!-- Bootstrap 5.3.3 JS Bundle -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+  <script>
+    $(document).ready(function () {
+      // Set Tahun Otomatis di Footer
+      $('#currentYear').text(new Date().getFullYear());
+
+      // Interaksi Tombol Besar "Lanjut Ke Catatan"
+      $('#btnLanjut').on('click', function (e) {
+        const btn = $(this);
+        btn.html('<i class="fa-solid fa-spinner fa-spin me-2"></i> <span>Membuka Catatan...</span>');
+      });
+
+      // Link Footer Panduan & Bantuan
+      $('#linkPanduan').on('click', function (e) {
+        e.preventDefault();
+        alert('Panduan Pengguna:\nKlik tombol besar "Lanjut Ke Catatan" untuk mulai membuka dan mencatat seluruh berkas kiriman lamaran kerja Anda.');
+      });
+
+      $('#linkBantuan').on('click', function (e) {
+        e.preventDefault();
+        alert('Bantuan Layanan:\nHalaman ini dapat langsung diakses tanpa perlu login atau memasukkan sandi.');
+      });
+    });
+  </script>
+</body>
+</html>

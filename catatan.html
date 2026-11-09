@@ -1,0 +1,1294 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lembar Catatan Kiriman Lamaran Kerja</title>
+  
+  <!-- Favicon -->
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%231A396D'%3E%3Cpath d='M20 6h-4V4c0-1.11-.89-2-2-2h-4c-1.11 0-2 .89-2 2v2H4c-1.11 0-1.99.89-1.99 2L2 19c0 1.11.89 2 2 2h16c1.11 0 2-.89 2-2V8c0-1.11-.89-2-2-2zm-6 0h-4V4h4v2z'/%3E%3C/svg%3E">
+
+  <!-- Google Fonts: Plus Jakarta Sans -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <!-- Bootstrap 5.3.3 CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
+  <!-- FontAwesome 6.5.1 -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+  <!-- DataTables 1.13.7 Bootstrap 5 CSS -->
+  <link rel="stylesheet" href="https://cdn.datatables.net/1.13.7/css/dataTables.bootstrap5.min.css">
+
+  <style>
+    :root {
+      --primary-color: #1A396D;
+      --primary-hover: #142C54;
+      --primary-active: #0F2242;
+      --primary-light: #eef3fb;
+      --primary-border: #d4e0f4;
+      --slate-50: #f8fafc;
+      --slate-100: #f1f5f9;
+      --slate-200: #e2e8f0;
+      --slate-300: #cbd5e1;
+      --slate-400: #94a3b8;
+      --slate-500: #64748b;
+      --slate-600: #475569;
+      --slate-700: #334155;
+      --slate-800: #1e293b;
+      --slate-900: #0f172a;
+    }
+
+    ::selection {
+      background-color: var(--primary-color);
+      color: #ffffff;
+    }
+
+    body {
+      font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+      background-color: #f8fafc;
+      color: var(--slate-800);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      overflow-x: hidden;
+    }
+
+    /* Buttons */
+    .btn-navy {
+      background-color: var(--primary-color);
+      color: #ffffff !important;
+      border: none;
+      font-weight: 600;
+      font-size: 0.82rem;
+      padding: 0.55rem 1.15rem;
+      border-radius: 0.65rem;
+      box-shadow: 0 4px 12px rgba(26, 57, 109, 0.2);
+      transition: all 0.2s ease;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.45rem;
+      cursor: pointer;
+      white-space: nowrap;
+    }
+
+    .btn-navy:hover {
+      background-color: var(--primary-hover);
+      box-shadow: 0 6px 16px rgba(26, 57, 109, 0.3);
+      transform: translateY(-1px);
+    }
+
+    .btn-navy:active {
+      background-color: var(--primary-active);
+      transform: translateY(0);
+    }
+
+    .btn-outline-slate {
+      background-color: #ffffff;
+      color: var(--slate-700);
+      border: 1px solid var(--slate-200);
+      font-weight: 600;
+      font-size: 0.82rem;
+      padding: 0.55rem 1rem;
+      border-radius: 0.65rem;
+      transition: all 0.2s ease;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.45rem;
+      text-decoration: none;
+      white-space: nowrap;
+    }
+
+    .btn-outline-slate:hover {
+      background-color: var(--slate-50);
+      border-color: var(--slate-300);
+      color: var(--primary-color);
+    }
+
+    /* KPI Summary Cards */
+    .metric-card {
+      background: #ffffff;
+      border: 1px solid var(--slate-200);
+      border-radius: 1rem;
+      padding: 1rem 1.15rem;
+      display: flex;
+      align-items: center;
+      gap: 0.85rem;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.02);
+      transition: all 0.2s ease;
+      height: 100%;
+    }
+
+    .metric-card:hover {
+      box-shadow: 0 4px 12px rgba(15, 23, 42, 0.05);
+      border-color: var(--primary-border);
+    }
+
+    .metric-icon-box {
+      width: 42px;
+      height: 42px;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.1rem;
+      flex-shrink: 0;
+    }
+
+    /* Table Card Wrapper */
+    .table-card-wrapper {
+      background: #ffffff;
+      border: 1px solid var(--slate-200);
+      border-radius: 1.25rem;
+      box-shadow: 0 4px 20px -2px rgba(15, 23, 42, 0.04);
+      overflow: hidden;
+      margin-bottom: 2rem;
+    }
+
+    .table-card-header {
+      background-color: #ffffff;
+      border-bottom: 1px solid var(--slate-200);
+      padding: 1.15rem 1.35rem;
+    }
+
+    .table-card-body {
+      padding: 1.25rem;
+    }
+
+    /* Custom Table Styling */
+    .custom-table {
+      font-size: 0.84rem;
+      width: 100% !important;
+      margin-bottom: 0 !important;
+    }
+
+    .custom-table thead th {
+      background-color: #f1f5f9 !important;
+      color: var(--slate-700) !important;
+      font-weight: 700 !important;
+      text-transform: uppercase;
+      font-size: 0.72rem;
+      letter-spacing: 0.04em;
+      padding: 0.9rem 1rem !important;
+      border-bottom: 1px solid var(--slate-200) !important;
+      white-space: nowrap;
+    }
+
+    .custom-table tbody td {
+      padding: 0.9rem 1rem !important;
+      vertical-align: middle;
+      border-bottom: 1px solid var(--slate-200);
+      color: var(--slate-800);
+    }
+
+    .custom-table tbody tr:hover td {
+      background-color: #f8fafc;
+    }
+
+    /* DataTables Controls */
+    .dataTables_wrapper .dataTables_length,
+    .dataTables_wrapper .dataTables_filter {
+      margin-bottom: 1rem;
+      font-size: 0.82rem;
+      color: var(--slate-600);
+    }
+
+    .dataTables_wrapper .dataTables_length select {
+      border-radius: 0.5rem;
+      border: 1px solid var(--slate-200);
+      padding: 0.35rem 1.8rem 0.35rem 0.65rem;
+      font-size: 0.82rem;
+      color: var(--slate-800);
+      background-color: #ffffff;
+      margin: 0 0.4rem;
+    }
+
+    .dataTables_wrapper .dataTables_filter input {
+      border-radius: 0.5rem;
+      border: 1px solid var(--slate-200);
+      padding: 0.38rem 0.85rem;
+      font-size: 0.82rem;
+      margin-left: 0.5rem;
+      background-color: #fafbfc;
+      transition: all 0.2s ease;
+    }
+
+    .dataTables_wrapper .dataTables_filter input:focus {
+      border-color: var(--primary-color);
+      box-shadow: 0 0 0 3px rgba(26, 57, 109, 0.12);
+      outline: none;
+      background-color: #ffffff;
+    }
+
+    .dataTables_wrapper .dataTables_info {
+      font-size: 0.78rem;
+      color: var(--slate-500);
+      padding-top: 1rem;
+    }
+
+    .dataTables_wrapper .dataTables_paginate {
+      padding-top: 0.85rem;
+    }
+
+    .page-item.active .page-link {
+      background-color: var(--primary-color) !important;
+      border-color: var(--primary-color) !important;
+      color: #ffffff !important;
+    }
+
+    .page-link {
+      font-size: 0.8rem;
+      color: var(--slate-700);
+      border-color: var(--slate-200);
+      border-radius: 0.45rem !important;
+      margin: 0 2px;
+    }
+
+    /* Status Badges */
+    .badge-status {
+      font-size: 0.72rem;
+      font-weight: 600;
+      padding: 0.35rem 0.65rem;
+      border-radius: 9999px;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+    }
+    
+    .badge-dikirim { background: #e0f2fe; color: #0369a1; border: 1px solid #bae6fd; }
+    .badge-screening { background: #fef3c7; color: #92400e; border: 1px solid #fde68a; }
+    .badge-psikotes { background: #e0e7ff; color: #3730a3; border: 1px solid #c7d2fe; }
+    .badge-interview { background: #fae8ff; color: #86198f; border: 1px solid #f5d0fe; }
+    .badge-offering { background: #dcfce7; color: #15803d; border: 1px solid #bbf7d0; }
+    .badge-ditolak { background: #ffe4e6; color: #be123c; border: 1px solid #fecdd3; }
+
+    /* Tombol Pensil Ubah Status Khusus (Barengan Status) */
+    .btn-status-edit {
+      background-color: #ffffff;
+      border: 1px solid var(--slate-200);
+      color: var(--primary-color);
+      width: 28px;
+      height: 28px;
+      border-radius: 6px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.72rem;
+      cursor: pointer;
+      transition: all 0.15s ease;
+      margin-left: 0.45rem;
+      vertical-align: middle;
+      box-shadow: 0 1px 2px rgba(0,0,0,0.04);
+      flex-shrink: 0;
+    }
+
+    .btn-status-edit:hover {
+      background-color: var(--primary-light);
+      border-color: var(--primary-border);
+      color: var(--primary-color);
+      transform: scale(1.08);
+    }
+
+    /* Action Buttons */
+    .btn-action-icon {
+      width: 32px;
+      height: 32px;
+      border-radius: 7px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.78rem;
+      border: 1px solid var(--slate-200);
+      background-color: #ffffff;
+      color: var(--slate-600);
+      transition: all 0.15s ease;
+      cursor: pointer;
+    }
+
+    .btn-action-icon:hover {
+      border-color: var(--slate-300);
+      background-color: var(--slate-50);
+    }
+
+    .btn-action-edit:hover {
+      color: var(--primary-color);
+      background-color: var(--primary-light);
+      border-color: var(--primary-border);
+    }
+
+    .btn-action-delete:hover {
+      color: #be123c;
+      background-color: #fff1f2;
+      border-color: #fecdd3;
+    }
+
+    /* Loading Overlay */
+    .table-loading-overlay {
+      position: absolute;
+      inset: 0;
+      background: rgba(255, 255, 255, 0.85);
+      backdrop-filter: blur(2px);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      z-index: 10;
+      border-radius: 1.25rem;
+    }
+
+    /* Modal Styling */
+    .modal-content {
+      border-radius: 1.25rem;
+      border: 1px solid var(--slate-200);
+      box-shadow: 0 20px 40px rgba(15, 23, 42, 0.14);
+    }
+
+    .form-control, .form-select {
+      border-radius: 0.75rem;
+      border: 1px solid var(--slate-200);
+      font-size: 0.82rem;
+      padding: 0.62rem 0.85rem;
+      background-color: #fafbfc;
+    }
+
+    .form-control:focus, .form-select:focus {
+      border-color: var(--primary-color);
+      box-shadow: 0 0 0 3px rgba(26, 57, 109, 0.12);
+      background-color: #ffffff;
+    }
+
+    /* Mobile Responsive Optimizations */
+    @media (max-width: 768px) {
+      .metric-card {
+        padding: 0.75rem 0.85rem;
+        gap: 0.65rem;
+      }
+      .metric-icon-box {
+        width: 36px;
+        height: 36px;
+        font-size: 0.95rem;
+      }
+      .metric-value {
+        font-size: 1.15rem !important;
+      }
+      .table-card-body {
+        padding: 0.85rem;
+      }
+      .table-card-header {
+        padding: 1rem;
+      }
+      .dataTables_wrapper .dataTables_filter input {
+        width: 100% !important;
+        margin-left: 0 !important;
+        margin-top: 0.35rem;
+      }
+      .dataTables_wrapper .dataTables_filter,
+      .dataTables_wrapper .dataTables_length {
+        text-align: left !important;
+      }
+      .btn-status-edit, .btn-action-icon {
+        width: 30px;
+        height: 30px;
+      }
+    }
+
+    /* Footer */
+    footer {
+      border-top: 1px solid var(--slate-200);
+      background: #ffffff;
+      padding: 1.15rem 0;
+      font-size: 0.75rem;
+      color: var(--slate-500);
+      margin-top: auto;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Main Container -->
+  <main class="container-xl px-3 px-sm-4 py-4">
+    
+    <!-- Header Title & Subtitle + Tombol Kembali Inline -->
+    <div class="d-flex flex-column flex-sm-row align-items-sm-center justify-content-between gap-2 mb-3 mb-md-4">
+      <div>
+        <h1 class="fw-bold text-slate-900 mb-1" style="font-size: clamp(1.25rem, 2.5vw, 1.55rem); letter-spacing: -0.02em;">
+          Daftar Catatan Kiriman Lamaran
+        </h1>
+        <p class="text-slate-500 mb-0" style="font-size: 0.8rem;">
+          Pantau seluruh berkas lamaran pekerjaan yang telah dikirim dan perbarui status seleksi kerja Anda.
+        </p>
+      </div>
+
+      <div>
+        <a href="index.html" class="btn btn-outline-slate btn-sm text-nowrap" title="Kembali ke Halaman Depan">
+          <i class="fa-solid fa-arrow-left me-1"></i> Kembali
+        </a>
+      </div>
+    </div>
+
+    <!-- 4 KPI Summary Cards (Mobile 2x2 grid) -->
+    <div class="row g-2 g-sm-3 mb-3 mb-md-4">
+      <div class="col-6 col-lg-3">
+        <div class="metric-card">
+          <div class="metric-icon-box" style="background-color: var(--primary-light); color: var(--primary-color);">
+            <i class="fa-solid fa-list-check"></i>
+          </div>
+          <div class="overflow-hidden">
+            <div class="text-slate-500 text-truncate" style="font-size: 0.7rem; font-weight: 500;">Total Lamaran</div>
+            <div class="fw-bold text-slate-900 metric-value" style="font-size: 1.35rem;" id="countTotal">-</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-6 col-lg-3">
+        <div class="metric-card">
+          <div class="metric-icon-box" style="background-color: #e0f2fe; color: #0284c7;">
+            <i class="fa-solid fa-paper-plane"></i>
+          </div>
+          <div class="overflow-hidden">
+            <div class="text-slate-500 text-truncate" style="font-size: 0.7rem; font-weight: 500;">Status Dikirim</div>
+            <div class="fw-bold text-slate-900 metric-value" style="font-size: 1.35rem;" id="countDikirim">-</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-6 col-lg-3">
+        <div class="metric-card">
+          <div class="metric-icon-box" style="background-color: #fae8ff; color: #a21caf;">
+            <i class="fa-solid fa-comments"></i>
+          </div>
+          <div class="overflow-hidden">
+            <div class="text-slate-500 text-truncate" style="font-size: 0.7rem; font-weight: 500;">Interview</div>
+            <div class="fw-bold text-slate-900 metric-value" style="font-size: 1.35rem;" id="countInterview">-</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-6 col-lg-3">
+        <div class="metric-card">
+          <div class="metric-icon-box" style="background-color: #dcfce7; color: #16a34a;">
+            <i class="fa-solid fa-award"></i>
+          </div>
+          <div class="overflow-hidden">
+            <div class="text-slate-500 text-truncate" style="font-size: 0.7rem; font-weight: 500;">Offering</div>
+            <div class="fw-bold text-slate-900 metric-value" style="font-size: 1.35rem;" id="countOffering">-</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- CARD UTAMA: MEMBUNGKUS TABEL DENGAN DATATABLES (Show 10,25,50,100,500,1000,all & default all) -->
+    <div class="card table-card-wrapper position-relative">
+      
+      <!-- Overlay Loading Spinner -->
+      <div id="tableLoading" class="table-loading-overlay">
+        <div class="spinner-border text-primary mb-2" role="status" style="color: var(--primary-color) !important;">
+          <span class="visually-hidden">Memuat...</span>
+        </div>
+        <div class="fw-semibold text-slate-700" style="font-size: 0.85rem;">Memuat data...</div>
+      </div>
+
+      <!-- Card Header -->
+      <div class="table-card-header d-flex flex-column flex-sm-row align-items-sm-center justify-content-between gap-2">
+        <h5 class="fw-bold text-slate-900 mb-0" style="font-size: 1rem;">
+          Tabel Catatan Kiriman Lamaran
+        </h5>
+
+        <button class="btn btn-navy btn-sm" id="btnTambahDataCard">
+          <i class="fa-solid fa-file-circle-plus me-1"></i> Input Catatan Baru
+        </button>
+      </div>
+
+      <!-- Card Body dengan DataTable -->
+      <div class="table-card-body">
+        
+        <!-- Petunjuk Swipe Mobile -->
+        <div class="d-md-none text-slate-400 mb-2" style="font-size: 0.72rem;">
+          <i class="fa-solid fa-arrows-left-right me-1 text-primary"></i> Geser tabel ke samping untuk melihat kolom lengkap
+        </div>
+
+        <div class="table-responsive">
+          <table id="tabelLamaran" class="table custom-table table-hover align-middle">
+            <thead>
+              <tr>
+                <th class="text-center" style="width: 45px;">No</th>
+                <th>Perusahaan</th>
+                <th>Posisi / Role</th>
+                <th>Level</th>
+                <th>Email Tujuan</th>
+                <th>Tanggal Lamar</th>
+                <th>Status</th>
+                <th class="text-center" style="width: 95px;">Aksi</th>
+              </tr>
+            </thead>
+            <tbody id="tableBody">
+              <!-- Baris tabel diisi secara dinamis dari database -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+    </div>
+
+  </main>
+
+  <!-- Footer -->
+  <footer>
+    <div class="container-xl px-3 px-sm-4 d-flex flex-column flex-sm-row align-items-center justify-content-between gap-2">
+      <div>
+        &copy; <span id="currentYear">2026</span> Seluruh hak cipta dilindungi.
+      </div>
+      <div class="d-flex align-items-center gap-3 text-slate-400">
+        <a href="index.html" class="text-decoration-none text-slate-500 hover-navy">
+          Kembali ke Beranda
+        </a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- MODAL 1: FORM TAMBAH / UBAH LENGKAP -->
+  <div class="modal fade" id="modalForm" tabindex="-1" aria-labelledby="modalFormLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header border-bottom border-slate-100 px-4 pt-3 pb-3">
+          <div class="d-flex align-items-center gap-2">
+            <div class="metric-icon-box" style="width: 34px; height: 34px; font-size: 0.85rem; background-color: var(--primary-light); color: var(--primary-color);">
+              <i class="fa-solid fa-file-signature"></i>
+            </div>
+            <div>
+              <h5 class="modal-title fw-bold text-slate-900 mb-0" id="modalFormLabel" style="font-size: 1.05rem;">
+                Catatan Lamaran
+              </h5>
+              <p class="text-slate-500 mb-0" style="font-size: 0.72rem;">Isi rincian pengiriman lamaran kerja</p>
+            </div>
+          </div>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+
+        <form id="formCatatan">
+          <div class="modal-body px-4 py-3">
+            <input type="hidden" id="editFirebaseKey" value="">
+
+            <div class="mb-3">
+              <label class="form-label text-slate-700 fw-semibold mb-1" style="font-size: 0.76rem;">Nama Perusahaan <span class="text-danger">*</span></label>
+              <div class="input-group">
+                <span class="input-group-text bg-white border-slate-200 text-slate-400" style="font-size: 0.8rem;"><i class="fa-regular fa-building"></i></span>
+                <input type="text" class="form-control" id="inputPerusahaan" placeholder="Contoh: Rapid Technology, BSC" required>
+              </div>
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label text-slate-700 fw-semibold mb-1" style="font-size: 0.76rem;">Posisi / Role <span class="text-danger">*</span></label>
+              <div class="input-group">
+                <span class="input-group-text bg-white border-slate-200 text-slate-400" style="font-size: 0.8rem;"><i class="fa-solid fa-user-tag"></i></span>
+                <input type="text" class="form-control" id="inputPosisi" placeholder="Contoh: .NET Developer, Backend Developer" required>
+              </div>
+            </div>
+
+            <div class="row g-2 mb-3">
+              <div class="col-sm-6">
+                <label class="form-label text-slate-700 fw-semibold mb-1" style="font-size: 0.76rem;">Level Pengalaman</label>
+                <input type="text" class="form-control" id="inputLevel" placeholder="Contoh: Junior, Junior–Middle, 1–3 tahun, —">
+              </div>
+
+              <div class="col-sm-6">
+                <label class="form-label text-slate-700 fw-semibold mb-1" style="font-size: 0.76rem;">Status Seleksi <span class="text-danger">*</span></label>
+                <select class="form-select" id="inputStatus" required>
+                  <option value="Dikirim">Dikirim</option>
+                  <option value="Screening HR">Screening HR</option>
+                  <option value="Psikotes">Psikotes</option>
+                  <option value="Interview">Interview</option>
+                  <option value="Offering">Offering</option>
+                  <option value="Ditolak">Ditolak</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label text-slate-700 fw-semibold mb-1" style="font-size: 0.76rem;">Email Tujuan / Saluran</label>
+              <div class="input-group">
+                <span class="input-group-text bg-white border-slate-200 text-slate-400" style="font-size: 0.8rem;"><i class="fa-regular fa-envelope"></i></span>
+                <input type="text" class="form-control" id="inputEmail" placeholder="Contoh: nawang@rapidtech.id atau Form website">
+              </div>
+            </div>
+
+            <div class="mb-3">
+              <div class="d-flex align-items-center justify-content-between mb-1">
+                <label class="form-label text-slate-700 fw-semibold mb-0" style="font-size: 0.76rem;">
+                  Tanggal & Waktu Lamar <span class="text-danger">*</span>
+                </label>
+                <button type="button" class="btn btn-link text-primary text-decoration-none p-0" id="btnWaktuSekarang" style="font-size: 0.72rem;">
+                  <i class="fa-solid fa-clock-rotate-left me-1"></i> Gunakan Waktu Sekarang
+                </button>
+              </div>
+
+              <div class="row g-2">
+                <div class="col-7">
+                  <div class="input-group">
+                    <span class="input-group-text bg-white border-slate-200 text-slate-400" style="font-size: 0.8rem;">
+                      <i class="fa-regular fa-calendar-days"></i>
+                    </span>
+                    <input type="date" class="form-control" id="inputTanggalDate" required>
+                  </div>
+                </div>
+                <div class="col-5">
+                  <div class="input-group">
+                    <span class="input-group-text bg-white border-slate-200 text-slate-400" style="font-size: 0.8rem;">
+                      <i class="fa-regular fa-clock"></i>
+                    </span>
+                    <input type="time" class="form-control" id="inputTanggalTime" step="1" required>
+                  </div>
+                </div>
+              </div>
+              
+              <div class="d-flex align-items-center justify-content-between mt-1 text-slate-400" style="font-size: 0.7rem;">
+                <span>Format tersimpan di database:</span>
+                <code class="text-primary fw-semibold font-monospace" id="previewTanggalFormat">2026-11-10 05:16:54</code>
+              </div>
+            </div>
+          </div>
+
+          <div class="modal-footer border-top border-slate-100 px-4 py-3">
+            <button type="button" class="btn btn-outline-slate" data-bs-dismiss="modal">Batal</button>
+            <button type="submit" class="btn btn-navy" id="btnSimpanCatatan">
+              <i class="fa-solid fa-floppy-disk me-1"></i> Simpan Catatan
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL 2: UBAH STATUS CEPAT (ICON PENCIL SENDIRI BARENGAN STATUS) -->
+  <div class="modal fade" id="modalUbahStatus" tabindex="-1" aria-labelledby="modalStatusLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-sm">
+      <div class="modal-content">
+        <div class="modal-header border-bottom border-slate-100 px-3 py-2.5">
+          <div class="d-flex align-items-center gap-2">
+            <i class="fa-solid fa-pen-to-square text-primary"></i>
+            <h6 class="modal-title fw-bold text-slate-900 mb-0" id="modalStatusLabel" style="font-size: 0.92rem;">
+              Ubah Status Seleksi
+            </h6>
+          </div>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+
+        <form id="formUbahStatus">
+          <div class="modal-body px-3 py-3">
+            <input type="hidden" id="statusTargetFirebaseKey" value="">
+
+            <div class="mb-2">
+              <div class="text-slate-500" style="font-size: 0.72rem;">Perusahaan:</div>
+              <div class="fw-bold text-slate-900 mb-1" id="statusTargetPerusahaan">-</div>
+              <div class="text-slate-500" style="font-size: 0.72rem;">Posisi:</div>
+              <div class="fw-semibold text-slate-700 mb-3" id="statusTargetPosisi" style="font-size: 0.8rem;">-</div>
+            </div>
+
+            <div class="mb-2">
+              <label class="form-label text-slate-700 fw-semibold mb-1" style="font-size: 0.76rem;">Pilih Status Baru:</label>
+              <select class="form-select form-select-sm" id="selectStatusBaru" required>
+                <option value="Dikirim">Dikirim</option>
+                <option value="Screening HR">Screening HR</option>
+                <option value="Psikotes">Psikotes</option>
+                <option value="Interview">Interview</option>
+                <option value="Offering">Offering</option>
+                <option value="Ditolak">Ditolak</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="modal-footer border-top border-slate-100 px-3 py-2">
+            <button type="button" class="btn btn-outline-slate btn-sm" data-bs-dismiss="modal">Batal</button>
+            <button type="submit" class="btn btn-navy btn-sm" id="btnUpdateStatusFirebase">
+              <i class="fa-solid fa-check me-1"></i> Update Status
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast Notification -->
+  <div class="toast-container position-fixed bottom-0 end-0 p-3" style="z-index: 1090;">
+    <div id="liveToast" class="toast align-items-center text-bg-dark border-0 rounded-3 shadow" role="alert" aria-live="assertive" aria-atomic="true">
+      <div class="d-flex">
+        <div class="toast-body d-flex align-items-center gap-2" style="font-size: 0.8rem;">
+          <i class="fa-solid fa-circle-check text-success" id="toastIcon"></i>
+          <span id="toastMessage">Operasi berhasil dilakukan!</span>
+        </div>
+        <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+      </div>
+    </div>
+  </div>
+
+  <!-- jQuery 3.7.1 -->
+  <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+  <!-- Bootstrap 5.3.3 JS Bundle -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <!-- DataTables 1.13.7 JS -->
+  <script src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.min.js"></script>
+  <script src="https://cdn.datatables.net/1.13.7/js/dataTables.bootstrap5.min.js"></script>
+
+  <script>
+    $(document).ready(function () {
+      // Set Tahun Otomatis di Footer
+      $('#currentYear').text(new Date().getFullYear());
+
+      // URL FIREBASE REALTIME DATABASE REST API
+      const FIREBASE_BASE_URL = "https://catatan-harian-bcc18-default-rtdb.asia-southeast1.firebasedatabase.app/List-Lamaran";
+
+      // 9 DATA AWAL BAWAAN
+      const initialDefaultData = [
+        {
+          no: 1,
+          perusahaan: "BSC",
+          posisi: "Developer",
+          level: "—",
+          email: "Form website",
+          tanggal: "2026-11-10 05:16:54",
+          status: "Dikirim"
+        },
+        {
+          no: 2,
+          perusahaan: "Rapid Technology",
+          posisi: ".NET Developer",
+          level: "Junior–Middle",
+          email: "nawang@rapidtech.id",
+          tanggal: "2026-11-10 05:16:54",
+          status: "Dikirim"
+        },
+        {
+          no: 3,
+          perusahaan: "IDstar",
+          posisi: "Backend / .NET Developer",
+          level: "Junior",
+          email: "Tidak terlihat",
+          tanggal: "2026-11-10 05:16:54",
+          status: "Dikirim"
+        },
+        {
+          no: 4,
+          perusahaan: "RadyaLabs",
+          posisi: "Back End Developer",
+          level: "Junior",
+          email: "join@radyalabs.com",
+          tanggal: "2026-11-10 05:16:54",
+          status: "Dikirim"
+        },
+        {
+          no: 5,
+          perusahaan: "ADI Consulting",
+          posisi: ".NET Developer (Database / ETL)",
+          level: "Junior",
+          email: "src4@adiconsulting.co",
+          tanggal: "2026-11-10 05:16:54",
+          status: "Dikirim"
+        },
+        {
+          no: 6,
+          perusahaan: "Nextalent",
+          posisi: ".NET Developer (MVC)",
+          level: "—",
+          email: "anadianextalent@gmail.com",
+          tanggal: "2026-11-10 05:16:54",
+          status: "Dikirim"
+        },
+        {
+          no: 7,
+          perusahaan: "Nawadata",
+          posisi: ".NET Developer",
+          level: "1–3 tahun",
+          email: "riska.amelia@nawadata.com",
+          tanggal: "2026-11-10 05:16:54",
+          status: "Dikirim"
+        },
+        {
+          no: 8,
+          perusahaan: "Indocyber",
+          posisi: ".NET Developer",
+          level: "—",
+          email: "fitri.raudha@indocyber.id",
+          tanggal: "2026-11-10 05:16:54",
+          status: "Dikirim"
+        },
+        {
+          no: 9,
+          perusahaan: "AGIT / Astra Graphia",
+          posisi: ".NET Developer",
+          level: "—",
+          email: "Form career AGIT",
+          tanggal: "2026-11-10 05:16:54",
+          status: "Dikirim"
+        }
+      ];
+
+      let currentDataList = [];
+      let dataTableInstance = null;
+
+      // Helper Render Badge Status
+      function renderStatusBadge(status) {
+        switch (status) {
+          case 'Dikirim':
+            return '<span class="badge-status badge-dikirim"><i class="fa-solid fa-paper-plane fa-2xs"></i> Dikirim</span>';
+          case 'Screening HR':
+            return '<span class="badge-status badge-screening"><i class="fa-solid fa-file-lines fa-2xs"></i> Screening HR</span>';
+          case 'Psikotes':
+            return '<span class="badge-status badge-psikotes"><i class="fa-solid fa-brain fa-2xs"></i> Psikotes</span>';
+          case 'Interview':
+            return '<span class="badge-status badge-interview"><i class="fa-solid fa-comments fa-2xs"></i> Interview</span>';
+          case 'Offering':
+            return '<span class="badge-status badge-offering"><i class="fa-solid fa-award fa-2xs"></i> Offering</span>';
+          case 'Ditolak':
+            return '<span class="badge-status badge-ditolak"><i class="fa-solid fa-circle-xmark fa-2xs"></i> Ditolak</span>';
+          default:
+            return '<span class="badge-status badge-dikirim">' + status + '</span>';
+        }
+      }
+
+      // Update Angka Statistik KPI
+      function updateMetrics(items) {
+        const total = items.length;
+        const dikirim = items.filter(i => i.status === 'Dikirim').length;
+        const interview = items.filter(i => i.status === 'Interview').length;
+        const offering = items.filter(i => i.status === 'Offering').length;
+
+        $('#countTotal').text(total);
+        $('#countDikirim').text(dikirim);
+        $('#countInterview').text(interview);
+        $('#countOffering').text(offering);
+      }
+
+      // Toast Notifikasi
+      function showToast(message, isSuccess = true) {
+        $('#toastMessage').text(message);
+        if (isSuccess) {
+          $('#toastIcon').attr('class', 'fa-solid fa-circle-check text-success');
+        } else {
+          $('#toastIcon').attr('class', 'fa-solid fa-circle-exclamation text-warning');
+        }
+        const toast = new bootstrap.Toast(document.getElementById('liveToast'), { delay: 2800 });
+        toast.show();
+      }
+
+      // Format Waktu Sekarang (YYYY-MM-DD HH:mm:ss)
+      function getCurrentFormattedDateTime() {
+        const now = new Date();
+        const year = now.getFullYear();
+        const month = String(now.getMonth() + 1).padStart(2, '0');
+        const day = String(now.getDate()).padStart(2, '0');
+        const hours = String(now.getHours()).padStart(2, '0');
+        const minutes = String(now.getMinutes()).padStart(2, '0');
+        const seconds = String(now.getSeconds()).padStart(2, '0');
+        return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
+      }
+
+      // Render DataTable dari Array Data (Diurutkan Waktu Terbaru di Paling Atas)
+      function renderDataTable(items) {
+        // Urutkan data berdasarkan waktu terbaru (Descending)
+        items.sort(function (a, b) {
+          const tA = (a.tanggal || '').trim();
+          const tB = (b.tanggal || '').trim();
+          return tB.localeCompare(tA);
+        });
+
+        updateMetrics(items);
+
+        // Hancurkan DataTable lama sebelum inisialisasi ulang
+        if ($.fn.DataTable.isDataTable('#tabelLamaran')) {
+          $('#tabelLamaran').DataTable().destroy();
+        }
+
+        const tbody = $('#tableBody');
+        tbody.empty();
+
+        items.forEach(function (item, idx) {
+          // Format Email Tujuan
+          let emailDisplay = item.email || '—';
+          if (item.email && item.email.includes('@')) {
+            emailDisplay = `<a href="mailto:${item.email}" class="text-decoration-none text-primary fw-medium"><i class="fa-regular fa-envelope me-1 text-slate-400"></i><code>${item.email}</code></a>`;
+          } else if (item.email === 'Tidak terlihat') {
+            emailDisplay = `<span class="badge bg-slate-100 text-slate-500 border border-slate-200">${item.email}</span>`;
+          } else if (item.email && item.email.toLowerCase().includes('form')) {
+            emailDisplay = `<span class="badge border border-primary-subtle" style="background:#eef3fb; color:#1A396D;"><i class="fa-solid fa-globe me-1"></i>${item.email}</span>`;
+          }
+
+          const row = `
+            <tr>
+              <td class="text-center fw-semibold text-slate-500 col-no">${idx + 1}</td>
+              <td>
+                <strong class="text-slate-900">${item.perusahaan}</strong>
+              </td>
+              <td>
+                <span class="fw-semibold text-slate-800">${item.posisi}</span>
+              </td>
+              <td>
+                <span class="text-slate-600">${item.level || '—'}</span>
+              </td>
+              <td>
+                ${emailDisplay}
+              </td>
+              <td>
+                <code class="text-slate-700 font-monospace" style="font-size: 0.78rem;">${item.tanggal}</code>
+              </td>
+              <td>
+                <!-- STATUS BARENGAN DENGAN ICON PENCIL TERSENDIRI -->
+                <div class="d-inline-flex align-items-center text-nowrap">
+                  ${renderStatusBadge(item.status)}
+                  <button type="button" class="btn-status-edit" data-key="${item._firebaseKey}" title="Ubah Status Khusus">
+                    <i class="fa-solid fa-pencil"></i>
+                  </button>
+                </div>
+              </td>
+              <td class="text-center text-nowrap">
+                <!-- ACTION UBAH & HAPUS -->
+                <div class="d-inline-flex gap-1">
+                  <button type="button" class="btn-action-icon btn-action-edit" data-key="${item._firebaseKey}" title="Ubah Data Lengkap">
+                    <i class="fa-solid fa-pen-to-square"></i>
+                  </button>
+                  <button type="button" class="btn-action-icon btn-action-delete" data-key="${item._firebaseKey}" title="Hapus Data">
+                    <i class="fa-solid fa-trash-can"></i>
+                  </button>
+                </div>
+              </td>
+            </tr>
+          `;
+          tbody.append(row);
+        });
+
+        // Inisialisasi DataTable: urutkan waktu terbaru (kolom index 5) di paling atas, no 1 di atas
+        dataTableInstance = $('#tabelLamaran').DataTable({
+          lengthMenu: [
+            [10, 25, 50, 100, 500, 1000, -1],
+            [10, 25, 50, 100, 500, 1000, "All"]
+          ],
+          pageLength: -1, // DEFAULT ALL SESUAI PERMINTAAN USER
+          order: [[5, 'desc']], // Urutkan tanggal & waktu terbaru di atas
+          columnDefs: [
+            { orderable: false, targets: [0, 6, 7] } // Kolom No, Status & Aksi tidak diacak
+          ],
+          language: {
+            lengthMenu: "Tampilkan _MENU_ data per halaman",
+            zeroRecords: "Tidak ada catatan lamaran yang cocok",
+            info: "Menampilkan _START_ sampai _END_ dari total _TOTAL_ data",
+            infoEmpty: "Menampilkan 0 data",
+            infoFiltered: "(disaring dari total _MAX_ data)",
+            search: "<i class='fa-solid fa-magnifying-glass me-1 text-slate-400'></i> Cari:",
+            searchPlaceholder: "Ketik nama perusahaan, posisi, atau email...",
+            paginate: {
+              first: "<i class='fa-solid fa-angles-left'></i>",
+              last: "<i class='fa-solid fa-angles-right'></i>",
+              next: "<i class='fa-solid fa-angle-right'></i>",
+              previous: "<i class='fa-solid fa-angle-left'></i>"
+            }
+          }
+        });
+
+        // Pastikan kolom No selalu 1, 2, 3... berurutan dari baris paling atas
+        dataTableInstance.on('draw.dt', function () {
+          dataTableInstance.column(0, { search: 'applied', order: 'applied' }).nodes().each(function (cell, i) {
+            cell.innerHTML = i + 1;
+          });
+        });
+      }
+
+      // ==========================================
+      // OPERASI CRUD KE FIREBASE
+      // ==========================================
+
+      // 1. READ: Ambil Data dari Firebase
+      function loadDataFromFirebase() {
+        $('#tableLoading').removeClass('d-none');
+
+        $.ajax({
+          url: `${FIREBASE_BASE_URL}.json`,
+          method: 'GET',
+          dataType: 'json',
+          success: function (response) {
+            let items = [];
+
+            if (Array.isArray(response)) {
+              response.forEach((val, idx) => {
+                if (val) {
+                  items.push({
+                    _firebaseKey: idx.toString(),
+                    ...val
+                  });
+                }
+              });
+            } else if (response && typeof response === 'object') {
+              Object.keys(response).forEach(key => {
+                if (response[key] && typeof response[key] === 'object') {
+                  items.push({
+                    _firebaseKey: key,
+                    ...response[key]
+                  });
+                }
+              });
+            }
+
+            // Jika database kosong, inisialisasi otomatis
+            if (items.length === 0) {
+              seedInitialDataToFirebase();
+              return;
+            }
+
+            currentDataList = items;
+            renderDataTable(items);
+            $('#tableLoading').addClass('d-none');
+          },
+          error: function (xhr, status, error) {
+            $('#tableLoading').addClass('d-none');
+            showToast('Gagal memuat data: ' + error, false);
+          }
+        });
+      }
+
+      // Inisialisasi awal ke Firebase jika kosong
+      function seedInitialDataToFirebase() {
+        $.ajax({
+          url: `${FIREBASE_BASE_URL}.json`,
+          method: 'PUT',
+          contentType: 'application/json',
+          data: JSON.stringify(initialDefaultData),
+          success: function () {
+            loadDataFromFirebase();
+          },
+          error: function (xhr, status, error) {
+            $('#tableLoading').addClass('d-none');
+            showToast('Gagal inisialisasi data: ' + error, false);
+          }
+        });
+      }
+
+      // Helper Sinkronisasi Tanggal & Waktu
+      function setInputDateTime(dateTimeStr) {
+        if (dateTimeStr && dateTimeStr.includes(' ')) {
+          const parts = dateTimeStr.split(' ');
+          $('#inputTanggalDate').val(parts[0]);
+          $('#inputTanggalTime').val(parts[1] || '00:00:00');
+        } else {
+          const now = new Date();
+          const y = now.getFullYear();
+          const m = String(now.getMonth() + 1).padStart(2, '0');
+          const d = String(now.getDate()).padStart(2, '0');
+          const hh = String(now.getHours()).padStart(2, '0');
+          const mm = String(now.getMinutes()).padStart(2, '0');
+          const ss = String(now.getSeconds()).padStart(2, '0');
+          $('#inputTanggalDate').val(`${y}-${m}-${d}`);
+          $('#inputTanggalTime').val(`${hh}:${mm}:${ss}`);
+        }
+        updatePreviewDateTime();
+      }
+
+      function updatePreviewDateTime() {
+        const dateVal = $('#inputTanggalDate').val() || 'YYYY-MM-DD';
+        let timeVal = $('#inputTanggalTime').val() || '00:00:00';
+        if (timeVal.length === 5) {
+          timeVal += ':00';
+        }
+        $('#previewTanggalFormat').text(`${dateVal} ${timeVal}`);
+      }
+
+      function getFormattedDateTimeValue() {
+        const dateVal = $('#inputTanggalDate').val();
+        let timeVal = $('#inputTanggalTime').val() || '00:00:00';
+        if (timeVal.length === 5) {
+          timeVal += ':00';
+        }
+        return `${dateVal} ${timeVal}`;
+      }
+
+      // Event Listener saat picker berubah
+      $('#inputTanggalDate, #inputTanggalTime').on('input change', function () {
+        updatePreviewDateTime();
+      });
+
+      // Tombol Cepat: Gunakan Waktu Sekarang
+      $('#btnWaktuSekarang').on('click', function () {
+        setInputDateTime();
+      });
+
+      // Initial Read
+      loadDataFromFirebase();
+
+      // 2. CREATE: Buka Modal Input dari Tombol Card
+      $('#btnTambahDataCard').on('click', function () {
+        $('#editFirebaseKey').val("");
+        $('#formCatatan')[0].reset();
+        $('#modalFormLabel').text('Tambah Catatan Lamaran');
+        $('#btnSimpanCatatan').html('<i class="fa-solid fa-floppy-disk me-1"></i> Simpan Catatan');
+        setInputDateTime(); // Otomatis terisi waktu sekarang
+
+        const modal = new bootstrap.Modal(document.getElementById('modalForm'));
+        modal.show();
+      });
+
+      // Submit Form Tambah atau Edit Lengkap
+      $('#formCatatan').on('submit', function (e) {
+        e.preventDefault();
+
+        const firebaseKey = $('#editFirebaseKey').val();
+        const perusahaan = $('#inputPerusahaan').val().trim();
+        const posisi = $('#inputPosisi').val().trim();
+        const level = $('#inputLevel').val().trim() || '—';
+        const email = $('#inputEmail').val().trim() || '—';
+        const tanggal = getFormattedDateTimeValue();
+        const status = $('#inputStatus').val();
+
+        if (!perusahaan || !posisi || !$('#inputTanggalDate').val()) {
+          alert('Mohon isi nama perusahaan, posisi, dan tanggal lamar.');
+          return;
+        }
+
+        const payload = {
+          no: currentDataList.length + 1,
+          perusahaan: perusahaan,
+          posisi: posisi,
+          level: level,
+          email: email,
+          tanggal: tanggal,
+          status: status
+        };
+
+        const modalEl = document.getElementById('modalForm');
+        const modal = bootstrap.Modal.getInstance(modalEl);
+
+        if (firebaseKey) {
+          // UPDATE (PATCH)
+          $('#btnSimpanCatatan').prop('disabled', true).html('<i class="fa-solid fa-spinner fa-spin me-1"></i> Menyimpan...');
+          $.ajax({
+            url: `${FIREBASE_BASE_URL}/${firebaseKey}.json`,
+            method: 'PATCH',
+            contentType: 'application/json',
+            data: JSON.stringify(payload),
+            success: function () {
+              $('#btnSimpanCatatan').prop('disabled', false);
+              if (modal) modal.hide();
+              showToast('Data lamaran berhasil diperbarui!');
+              loadDataFromFirebase();
+            },
+            error: function (xhr, status, error) {
+              $('#btnSimpanCatatan').prop('disabled', false);
+              showToast('Gagal memperbarui data: ' + error, false);
+            }
+          });
+        } else {
+          // CREATE (POST)
+          $('#btnSimpanCatatan').prop('disabled', true).html('<i class="fa-solid fa-spinner fa-spin me-1"></i> Menyimpan...');
+          $.ajax({
+            url: `${FIREBASE_BASE_URL}.json`,
+            method: 'POST',
+            contentType: 'application/json',
+            data: JSON.stringify(payload),
+            success: function () {
+              $('#btnSimpanCatatan').prop('disabled', false);
+              if (modal) modal.hide();
+              showToast('Catatan lamaran baru berhasil disimpan!');
+              loadDataFromFirebase();
+            },
+            error: function (xhr, status, error) {
+              $('#btnSimpanCatatan').prop('disabled', false);
+              showToast('Gagal menyimpan data baru: ' + error, false);
+            }
+          });
+        }
+      });
+
+      // 3. EDIT FULL: Buka Modal Ubah Lengkap
+      $(document).on('click', '.btn-action-edit', function () {
+        const key = $(this).data('key').toString();
+        const item = currentDataList.find(i => i._firebaseKey.toString() === key);
+
+        if (item) {
+          $('#editFirebaseKey').val(key);
+          $('#inputPerusahaan').val(item.perusahaan);
+          $('#inputPosisi').val(item.posisi);
+          $('#inputLevel').val(item.level);
+          $('#inputEmail').val(item.email);
+          setInputDateTime(item.tanggal); // Muat tanggal & jam dari database
+          $('#inputStatus').val(item.status);
+
+          $('#modalFormLabel').text('Ubah Data Lamaran');
+          $('#btnSimpanCatatan').html('<i class="fa-solid fa-check me-1"></i> Perbarui Data');
+
+          const modal = new bootstrap.Modal(document.getElementById('modalForm'));
+          modal.show();
+        }
+      });
+
+      // 4. QUICK STATUS EDIT: Icon Pencil Tersendiri Barengan Status
+      $(document).on('click', '.btn-status-edit', function () {
+        const key = $(this).data('key').toString();
+        const item = currentDataList.find(i => i._firebaseKey.toString() === key);
+
+        if (item) {
+          $('#statusTargetFirebaseKey').val(key);
+          $('#statusTargetPerusahaan').text(item.perusahaan);
+          $('#statusTargetPosisi').text(item.posisi);
+          $('#selectStatusBaru').val(item.status);
+
+          const modal = new bootstrap.Modal(document.getElementById('modalUbahStatus'));
+          modal.show();
+        }
+      });
+
+      // Submit Form Ubah Status Cepat (PATCH ke Firebase)
+      $('#formUbahStatus').on('submit', function (e) {
+        e.preventDefault();
+        const key = $('#statusTargetFirebaseKey').val();
+        const statusBaru = $('#selectStatusBaru').val();
+
+        $('#btnUpdateStatusFirebase').prop('disabled', true).html('<i class="fa-solid fa-spinner fa-spin me-1"></i> Mengupdate...');
+
+        $.ajax({
+          url: `${FIREBASE_BASE_URL}/${key}.json`,
+          method: 'PATCH',
+          contentType: 'application/json',
+          data: JSON.stringify({ status: statusBaru }),
+          success: function () {
+            $('#btnUpdateStatusFirebase').prop('disabled', false).html('<i class="fa-solid fa-check me-1"></i> Update Status');
+            
+            const modalEl = document.getElementById('modalUbahStatus');
+            const modal = bootstrap.Modal.getInstance(modalEl);
+            if (modal) modal.hide();
+
+            showToast(`Status berhasil diubah menjadi "${statusBaru}"!`);
+            loadDataFromFirebase();
+          },
+          error: function (xhr, status, error) {
+            $('#btnUpdateStatusFirebase').prop('disabled', false).html('<i class="fa-solid fa-check me-1"></i> Update Status');
+            showToast('Gagal mengubah status: ' + error, false);
+          }
+        });
+      });
+
+      // 5. DELETE: Hapus Data
+      $(document).on('click', '.btn-action-delete', function () {
+        const key = $(this).data('key').toString();
+        const item = currentDataList.find(i => i._firebaseKey.toString() === key);
+
+        if (item && confirm(`Apakah Anda yakin ingin menghapus catatan lamaran ke "${item.perusahaan}"?`)) {
+          showToast('Menghapus data...');
+          
+          $.ajax({
+            url: `${FIREBASE_BASE_URL}/${key}.json`,
+            method: 'DELETE',
+            success: function () {
+              showToast(`Catatan lamaran ke ${item.perusahaan} telah dihapus.`);
+              loadDataFromFirebase();
+            },
+            error: function (xhr, status, error) {
+              showToast('Gagal menghapus data: ' + error, false);
+            }
+          });
+        }
+      });
+
+    });
+  </script>
+</body>
+</html>
